@@ -127,7 +127,7 @@ void my_main() {
                     xvals[1], yvals[1], zvals[1]);
       */
       add_box(tmp, op[i].op.box.d0[0],op[i].op.box.d0[1], op[i].op.box.d0[2], op[i].op.box.d1[0],op[i].op.box.d1[1], op[i].op.box.d1[2]);
-        
+
       matrix_mult(peek(systems), tmp);
       draw_polygons(tmp, s, zb,
 		    view, light, ambient, areflect, dreflect, sreflect);
@@ -143,7 +143,6 @@ void my_main() {
       add_sphere( polygons, xvals[0], yvals[0], zvals[0], r, step_3d);
       */
       add_sphere(tmp, op[i].op.sphere.d[0], op[i].op.sphere.d[1], op[i].op.sphere.d[2], op[i].op.sphere.r, step);
-
       matrix_mult(peek(systems), tmp);
       draw_polygons(tmp, s, zb,
 		    view, light, ambient, areflect, dreflect, sreflect);
@@ -198,6 +197,7 @@ void my_main() {
 
       matrix_mult(peek(systems), tmp);
       copy_matrix(tmp, peek(systems));
+      tmp->lastcol = 0;
     }//end scale
     
     else if ( op[i].opcode == MOVE){
@@ -212,6 +212,7 @@ void my_main() {
       
       matrix_mult(peek(systems), tmp);
       copy_matrix(tmp, peek(systems));
+      tmp->lastcol = 0;
     }//end translate
     
     else if ( op[i].opcode == ROTATE){
@@ -237,6 +238,7 @@ void my_main() {
 	tmp = make_rotZ( theta );
       matrix_mult(peek(systems), tmp);
       copy_matrix(tmp, peek(systems));
+      tmp->lastcol = 0;
     }//end rotate
     
     else if ( op[i].opcode == DISPLAY){
@@ -251,8 +253,7 @@ void my_main() {
       save_extension(s, op[i].op.save.p->name);
     }//end save
   }
-  free_stack(systems);
-  free(*s);
-  free(*zb);
-  free(tmp);
+  //free_stack(systems);
+  //free(s);
+  //free(zb);
 }
